@@ -5,7 +5,10 @@ export const keys = () =>
   createEnv({
     skipValidation: process.env.SKIP_ENV_VALIDATION === "true",
     server: {
-      UPSTASH_REDIS_REST_URL: z.url().optional(),
+      UPSTASH_REDIS_REST_URL: z.preprocess(
+        (value) => (value === "" ? undefined : value),
+        z.url().optional()
+      ),
       UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
     },
     runtimeEnv: {

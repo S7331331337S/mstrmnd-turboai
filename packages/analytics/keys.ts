@@ -6,7 +6,10 @@ export const keys = () =>
     skipValidation: process.env.SKIP_ENV_VALIDATION === "true",
     client: {
       NEXT_PUBLIC_POSTHOG_KEY: z.string().startsWith("phc_").optional(),
-      NEXT_PUBLIC_POSTHOG_HOST: z.url().optional(),
+      NEXT_PUBLIC_POSTHOG_HOST: z.preprocess(
+        (value) => (value === "" ? undefined : value),
+        z.url().optional()
+      ),
       NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().startsWith("G-").optional(),
     },
     runtimeEnv: {

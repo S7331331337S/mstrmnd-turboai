@@ -20,8 +20,14 @@ export const keys = () =>
     client: {
       NEXT_PUBLIC_APP_URL: z.url(),
       NEXT_PUBLIC_WEB_URL: z.url(),
-      NEXT_PUBLIC_API_URL: z.url().optional(),
-      NEXT_PUBLIC_DOCS_URL: z.url().optional(),
+      NEXT_PUBLIC_API_URL: z.preprocess(
+        (value) => (value === "" ? undefined : value),
+        z.url().optional()
+      ),
+      NEXT_PUBLIC_DOCS_URL: z.preprocess(
+        (value) => (value === "" ? undefined : value),
+        z.url().optional()
+      ),
     },
     runtimeEnv: {
       ANALYZE: process.env.ANALYZE,

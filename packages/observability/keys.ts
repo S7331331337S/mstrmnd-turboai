@@ -6,7 +6,10 @@ export const keys = () =>
     skipValidation: process.env.SKIP_ENV_VALIDATION === "true",
     server: {
       BETTERSTACK_API_KEY: z.string().optional(),
-      BETTERSTACK_URL: z.url().optional(),
+      BETTERSTACK_URL: z.preprocess(
+        (value) => (value === "" ? undefined : value),
+        z.url().optional()
+      ),
 
       // Added by Sentry Integration, Vercel Marketplace
       SENTRY_ORG: z.string().optional(),
@@ -14,7 +17,10 @@ export const keys = () =>
     },
     client: {
       // Added by Sentry Integration, Vercel Marketplace
-      NEXT_PUBLIC_SENTRY_DSN: z.url().optional(),
+      NEXT_PUBLIC_SENTRY_DSN: z.preprocess(
+        (value) => (value === "" ? undefined : value),
+        z.url().optional()
+      ),
     },
     runtimeEnv: {
       BETTERSTACK_API_KEY: process.env.BETTERSTACK_API_KEY,
