@@ -7,7 +7,7 @@ const svixToken = keys().SVIX_TOKEN;
 
 export const send = async (eventType: string, payload: object) => {
   if (!svixToken) {
-    throw new Error("SVIX_TOKEN is not set");
+    return;
   }
 
   const svix = new Svix(svixToken);
@@ -32,7 +32,7 @@ export const send = async (eventType: string, payload: object) => {
 
 export const getAppPortal = async () => {
   if (!svixToken) {
-    throw new Error("SVIX_TOKEN is not set");
+    return;
   }
 
   const svix = new Svix(svixToken);
