@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@react-email/components": "1.0.8",
+    "@react-email/components": "1.0.12",
     "@react-email/preview-server": "5.2.9",
     "@repo/email": "workspace:*",
     "react": "19.2.4",
@@ -20,7 +20,7 @@
     "@repo/typescript-config": "workspace:*",
     "@types/node": "25.3.5",
     "@types/react": "19.2.14",
-    "next": "16.1.6",
+    "next": "16.3.4",
     "typescript": "^5.9.3"
   }
 }
