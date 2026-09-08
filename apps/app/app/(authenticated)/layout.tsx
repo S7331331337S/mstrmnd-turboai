@@ -7,6 +7,8 @@ import { env } from "@/env";
 import { NotificationsProvider } from "./components/notifications-provider";
 import { GlobalSidebar } from "./components/sidebar";
 
+export const dynamic = "force-dynamic";
+
 interface AppLayoutProperties {
   readonly children: ReactNode;
 }
