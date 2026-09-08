@@ -12,6 +12,20 @@ interface AppLayoutProperties {
 }
 
 const AppLayout = async ({ children }: AppLayoutProperties) => {
+  if (!env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-8 text-center">
+        <div className="max-w-md space-y-2">
+          <h1 className="font-semibold text-2xl">Authentication is not configured</h1>
+          <p className="text-muted-foreground">
+            Add Clerk keys to this Vercel project to enable sign-in and the
+            dashboard.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (env.ARCJET_KEY) {
     await secure(["CATEGORY:PREVIEW"]);
   }

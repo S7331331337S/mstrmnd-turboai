@@ -5,7 +5,10 @@ export const keys = () =>
   createEnv({
     skipValidation: process.env.SKIP_ENV_VALIDATION === "true",
     server: {
-      BASEHUB_TOKEN: z.string().startsWith("bshb_pk_").optional(),
+      BASEHUB_TOKEN: z.preprocess(
+        (value) => (value === "" ? undefined : value),
+        z.string().startsWith("bshb_pk_").optional()
+      ),
     },
     runtimeEnv: {
       BASEHUB_TOKEN: process.env.BASEHUB_TOKEN,

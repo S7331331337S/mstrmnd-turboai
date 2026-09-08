@@ -49,6 +49,10 @@ export const AuthProvider = ({
     helpPageUrl: helpUrl,
   };
 
+  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    return properties.children;
+  }
+
   return (
     <ClerkProvider
       {...properties}
