@@ -23,7 +23,7 @@
     "@repo/rate-limit": "workspace:*",
     "@repo/security": "workspace:*",
     "@repo/seo": "workspace:*",
-    "@rescale/nemo": "^2.1.1",
+    "@rescale/nemo": "^3.0.1",
     "@sentry/nextjs": "^10.42.0",
     "@t3-oss/env-nextjs": "^0.13.10",
     "date-fns": "^4.1.0",
