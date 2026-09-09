@@ -11,10 +11,13 @@ const securityHeaders = env.FLAGS_SECRET
   ? securityMiddleware(noseconeOptionsWithToolbar)
   : securityMiddleware(noseconeOptions);
 
-// Clerk middleware wraps other middleware in its callback
-// For apps using Clerk, compose middleware inside authMiddleware callback
-// For apps without Clerk, use createNEMO for composition (see apps/web)
-export default authMiddleware(() => securityHeaders()) as unknown as NextProxy;
+// Clerk middleware wraps other middleware in its callback.
+// Skip Clerk when no publishable key is configured so the app can boot.
+const proxy = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  ? authMiddleware(() => securityHeaders())
+  : () => securityHeaders();
+
+export default proxy as unknown as NextProxy;
 
 export const config = {
   matcher: [

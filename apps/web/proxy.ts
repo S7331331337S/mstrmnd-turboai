@@ -53,17 +53,22 @@ const composedMiddleware = createNEMO(
   }
 );
 
-// Clerk middleware wraps other middleware in its callback
-export default authMiddleware(async (_auth, request, event) => {
-  // Run security headers first
+const runProxy = async (
+  request: NextRequest,
+  event: Parameters<typeof composedMiddleware>[1]
+) => {
   const headersResponse = securityHeaders();
-
-  // Then run composed middleware (i18n + arcjet)
-  const middlewareResponse = await composedMiddleware(
-    request as unknown as NextRequest,
-    event
-  );
-
-  // Return middleware response if it exists, otherwise headers response
+  const middlewareResponse = await composedMiddleware(request, event);
   return middlewareResponse || headersResponse;
-}) as unknown as NextProxy;
+};
+
+// Clerk middleware wraps other middleware in its callback.
+// Skip Clerk when no publishable key is configured so the marketing site can boot.
+const proxy = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  ? authMiddleware(async (_auth, request, event) =>
+      runProxy(request as unknown as NextRequest, event)
+    )
+  : async (request: NextRequest, event: Parameters<typeof composedMiddleware>[1]) =>
+      runProxy(request, event);
+
+export default proxy as unknown as NextProxy;
